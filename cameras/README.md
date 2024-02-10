@@ -13,6 +13,8 @@ https://docs.google.com/document/d/1LRA2W9hHjYT-9NBD--So-HSOaEKgGpTQN6bspH7mPEk/
 - Fonction à minimiser / système d’équations
 - Algo pour la minimiser
 - Solutions parasites (et comment on les élimine)
+### Résolution explicite pour la position de la caméra
+- [cf papier](https://perception.inrialpes.fr/Publications/1999/QL99/Quan-pami99.pdf)
 ## Détection de la position de la balle
 ### Détection de la balle sur l’image
 - Racisme (discriminer les pixels en fonction de la couleur)
@@ -42,6 +44,14 @@ utilise tous les scripts précédents pour trouver la position de la balle à pa
 ## locate_camera.py
 calcule numériquement la position de la caméra à partir de points repérés sur l'image dont on connait la position réelle (dans l'espace)\
 contient également une petite UI pour cliquer sur ces points de référence manuellement
+## PnP.py
+fait la même chose avec la méthode explicite de Quan et Lan au lieu d'une méthode numérique\
+les formules sont précalculées (ie calculée à l'avance et stockée) sous forme de polynomes en plein de variables, qu'il faut évaluer lors de l'exécution
+## monom.npy
+array numpy représentant tous les monomes des formules susmentionnées
+## polynom_evaluation.pyh
+différentes expériences pour accélérer l'évaluation des formules de PnP\
+essentiellement l'idée est de trouver la manière optimale de calculer tous les monomes (ex: pour calculer x**8y**9 et x**9y**8, on pourra calculer d'abord (xy)**8, puis multiplier par x ou par y), puis enregistrer cet ordre de calcul, et le suivre lors de l'exécution
 ## video_formatter.py
 mini UI pour préparer une vidéo à être analysée (sélectionner une portion de la vidéo, crop si nécessaire)\
 en théorie pourrait être fait avec n'importe quel truc pour edit des vidéos mais souvent ces logiciels supportent mal les hautes framerates
